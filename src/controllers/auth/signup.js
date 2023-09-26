@@ -10,9 +10,9 @@ const signup = async (req, res) => {
 
     let checkIsRoleExixst = await RoleModel.find({role});
     if(!checkIsRoleExixst){
-      const role = await RoleModel.create({ role});
+      checkIsRoleExixst = await RoleModel.create({ role});
     }
-      role = checkIsRoleExixst._id;
+      
     
 
     const isUserAlreadyRegistered = await UserModel.find({
@@ -31,7 +31,7 @@ const signup = async (req, res) => {
     const user = await UserModel.create({
       username,
       password,
-      role,
+      role : checkIsRoleExixst._id,
     });
 
     // Generate auth token
